@@ -1,8 +1,8 @@
 const express = require('express'); 
 const router = express.Router();
 
-router.use('/', (req, res) => {
-    res.render('client/pages/home/index');
-});
+const controller = require('../../controllers/client/home.controller');
+
+router.get('/', controller.index);
 
 module.exports = router; // cho phép các file khác được require
