@@ -23,6 +23,10 @@ app.use(express.static('public'))
 route(app);
 routeAdmin(app)
 
+// App locals variables
+const systemConfig = require("./config/system")
+app.locals.prefixAdmin = systemConfig.prefixAdmin;
+
 app.listen(port, () => {  
     console.log(`Example app listening on port ${port}`);
 });
