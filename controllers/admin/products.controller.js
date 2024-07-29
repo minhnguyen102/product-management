@@ -30,7 +30,14 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status
     }
 
-    // Tìm ra vị trí button có params hiện tại 
+    let keyword ="";
+    if(req.query.keyword){
+        keyword = req.query.keyword;
+        const regex = new RegExp(keyword, "i");
+        find.title = regex;
+    }
+
+    // Tìm ra vị trí button có params hiện tại, xử lí hover
     if(req.query.status){
         const index = filterStatus.findIndex(item => item.status == req.query.status)
         filterStatus[index].class = "active";
@@ -39,8 +46,6 @@ module.exports.index = async (req, res) => {
         filterStatus[index].class = "active";
     }
     
-
-
     const products = await Products.find(find)
 
     // console.log(products);
@@ -48,6 +53,7 @@ module.exports.index = async (req, res) => {
     res.render('admin/pages/products/index', {
         pageTitle : "Trang chủ",
         products : products,
-        filterStatus : filterStatus
+        filterStatus : filterStatus,
+        keyword : keyword
     });
 }
