@@ -23,14 +23,35 @@ module.exports.index = async (req, res) => {
         find.title = objectSearch.regex;
     }
 
-    // end pagination
+    // pagination 
+    let objectPagination = {
+        currentPage : 1,
+        limitItem : 4,
+    }
 
-    const products = await Products.find(find);
+    if(req.query.page){
+        objectPagination.currentPage = parseInt(req.query.page);
+    }
+
+    objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItem;
+
+    // lấy ra số lượng sản phẩm đang có trong db
+    const countProducts =  await Products.countDocuments(find);
+    const totalPage = Math.ceil(countProducts / objectPagination.limitItem);
+    objectPagination.totalPage = totalPage;
+    // end pagination 
+
+
+    const products = await Products.find(find)
+                            .limit(objectPagination.limitItem)
+                            .skip(objectPagination.skip);
+
     // console.log(products);
     res.render('admin/pages/products/index', {
         pageTitle : "Trang chủ",
         products : products,
         filterStatus : filterStatus,
-        keyword : objectSearch.keyword
+        keyword : objectSearch.keyword,
+        objectPagination : objectPagination
     });
 }

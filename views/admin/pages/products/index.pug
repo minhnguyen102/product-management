@@ -12,7 +12,7 @@ block main
                 .col-6
                     +filter-status(filterStatus)
                 .col-6
-                    +search(keywork)
+                    +search(keyword)
                 
 
     .card.mb-3 
@@ -46,14 +46,16 @@ block main
     
     nav(aria-label='Page navigation example')
         ul(class="pagination")
-            li(class="page-item")
-                a(class="page-link") Previous
-            li(class="page-item")
-                a(class="page-link") 1
-            li(class="page-item active")
-                a(class="page-link") 2
-            li(class="page-item")
-                a(class="page-link") 3
-            li(class="page-item")
-                a(class="page-link") Next
+            if (objectPagination.currentPage > 1)
+                li(class="page-item" button-pagination = objectPagination.currentPage - 1)
+                    button(class="page-link") Previous
+            - for (let i = 1; i <= objectPagination.totalPage ; i++)
+                li(class=`page-item ${(objectPagination.currentPage == i) ? "active" : ""}`)
+                    button(
+                        class="page-link"
+                        button-pagination = i
+                    ) #{i}
+            if (objectPagination.currentPage < objectPagination.totalPage)
+                li(class="page-item")
+                    button(class="page-link" button-pagination = objectPagination.currentPage + 1) Next
 
