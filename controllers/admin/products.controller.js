@@ -1,6 +1,7 @@
 const Products = require("../../model/products.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
+const paginationHelper = require("../../helpers/pagination");
 
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
@@ -23,23 +24,19 @@ module.exports.index = async (req, res) => {
         find.title = objectSearch.regex;
     }
 
-    // pagination 
-    let objectPagination = {
-        currentPage : 1,
-        limitItem : 4,
-    }
-
-    if(req.query.page){
-        objectPagination.currentPage = parseInt(req.query.page);
-    }
-
-    objectPagination.skip = (objectPagination.currentPage - 1) * objectPagination.limitItem;
-
+    // Pagination 
     // lấy ra số lượng sản phẩm đang có trong db
     const countProducts =  await Products.countDocuments(find);
-    const totalPage = Math.ceil(countProducts / objectPagination.limitItem);
-    objectPagination.totalPage = totalPage;
-    // end pagination 
+
+    let objectPagination = paginationHelper(
+        {
+        currentPage : 1,
+        limitItem : 4, // mục đích truyèn thế này để sau này khi ứng dụng vào các trang khác, số lượng không limitItem có thể thay đổi, lúc đó ta có thể truyền vào thay vì điền cứng là 4
+        },
+        req.query,
+        countProducts
+    )
+    // End pagination 
 
 
     const products = await Products.find(find)
