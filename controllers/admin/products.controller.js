@@ -62,3 +62,30 @@ module.exports.changeStatus = async (req, res) => {
     await Products.updateOne({_id : id}, {status : status});
     res.redirect('back');
 }
+
+
+// [PATCH] /admim/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+    console.log(req.body)
+    const type = req.body.type;
+    const ids = req.body.ids.split(", ");
+    
+    // chưa hợp lí
+    switch (type){
+        case "active":
+            await Products.updateMany(
+                { _id: { $in: ids } },
+                { $set: { status : type } },
+            )
+            break;
+        case "inactive":
+            await Products.updateMany(
+                { _id: { $in: ids } },
+                { $set: { status : type } },
+            )
+            break
+        default:
+            break;
+    }
+    res.redirect('back');
+}

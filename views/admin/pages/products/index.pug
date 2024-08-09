@@ -2,6 +2,7 @@ extends ../../layouts/default
 include ../../mixins/filter-status.pug
 include ../../mixins/search.pug
 include ../../mixins/pagination.pug
+include ../../mixins/form-change-multi.pug
 
 block main
     h1 Trang danh sách sản phẩm 
@@ -18,10 +19,17 @@ block main
 
     .card.mb-3 
         .card-header Danh sách sản phẩm
-            .card-body 
-                table.table.table-hover.table-sm
+            .card-body
+                +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+                table(
+                    class="table table-hover table-sm"
+                    checkbox-multi
+                    ) 
+                
                     thead 
-                        tr 
+                        tr
+                            th
+                                input(type="checkbox" name="checkall")
                             th STT
                             th Hình ảnh
                             th Tên sản phẩm
@@ -30,7 +38,13 @@ block main
                             th Hành động 
                     tbody 
                         each item, index in products
-                            tr 
+                            tr
+                                td
+                                    input(
+                                        type="checkbox"
+                                        name="id"
+                                        value=item.id
+                                    )
                                 td #{index + 1}
                                 td 
                                     img(src= item.thumbnail, alt=item.title,width="100px", height="auto")
@@ -65,5 +79,5 @@ block main
         id="form-change-status"
         data-path = `${prefixAdmin}/products/change-status`
     )
-    //- mục đích tạo ra form: để tạo ra được 1 action -> url mong muốn để bên backend nhận được (status và id) => chọc vào db để thay đổi status của sản phẩm
+    //- mục đích tạo ra form ẩn: để tạo ra được 1 action -> url mong muốn để bên backend nhận được (status và id) => chọc vào db để thay đổi status của sản phẩm
     script(src="/admin/js/products.js")
