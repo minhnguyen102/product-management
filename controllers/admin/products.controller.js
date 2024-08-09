@@ -31,7 +31,7 @@ module.exports.index = async (req, res) => {
     let objectPagination = paginationHelper(
         {
         currentPage : 1,
-        limitItem : 4, // mục đích truyèn thế này để sau này khi ứng dụng vào các trang khác, số lượng không limitItem có thể thay đổi, lúc đó ta có thể truyền vào thay vì điền cứng là 4
+        limitItem : 5, // mục đích truyèn thế này để sau này khi ứng dụng vào các trang khác, số lượng không limitItem có thể thay đổi, lúc đó ta có thể truyền vào thay vì điền cứng là 4
         },
         req.query,
         countProducts
@@ -51,4 +51,14 @@ module.exports.index = async (req, res) => {
         keyword : objectSearch.keyword,
         objectPagination : objectPagination
     });
+}
+
+// [PATCH] /admim/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+    // console.log(req.params);
+    const status = req.params.status;
+    const id = req.params.id;
+
+    await Products.updateOne({_id : id}, {status : status});
+    res.redirect('back');
 }

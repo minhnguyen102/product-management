@@ -38,11 +38,32 @@ block main
                                 td #{item.price}$ 
                                 td
                                     if(item.status == "active")
-                                        a(href="" class="badge badge-success") Hoạt động
+                                        a(
+                                            href="javascript:;"
+                                            data-status = item.status 
+                                            data-id = item.id 
+                                            button-change-status 
+                                            class="badge badge-success"
+                                            ) Hoạt động
                                     else 
-                                        a(href="" class="badge badge-danger") Dừng hoạt động
+                                        a(
+                                            href="javascript:;"
+                                            data-status = item.status 
+                                            data-id = item.id 
+                                            button-change-status 
+                                            class="badge badge-danger"
+                                        ) Dừng hoạt động
                                 td
                                     button(class="btn btn-warning btn-sm") Sửa
                                     button(class="btn btn-danger btn-sm ml-1") Xóa
     
     +pagination(objectPagination)
+
+    form(
+        action=""
+        method="POST"
+        id="form-change-status"
+        data-path = `${prefixAdmin}/products/change-status`
+    )
+    //- mục đích tạo ra form: để tạo ra được 1 action -> url mong muốn để bên backend nhận được (status và id) => chọc vào db để thay đổi status của sản phẩm
+    script(src="/admin/js/products.js")
