@@ -86,6 +86,7 @@ if (formChangeMulti){
         e.preventDefault();
         const checkboxMulti = document.querySelector("[checkbox-multi]");
         const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked"); 
+
         const typeChange = e.target.elements.type.value; // lấy ra option được chọn
 
         if(typeChange == "delete-all"){
@@ -100,11 +101,16 @@ if (formChangeMulti){
             const idsInput = formChangeMulti.querySelector("input[name = 'ids']");
             inputChecked.forEach(input => {
                 const id = input.value
-                ids.push(id);
+                if(typeChange == "change-position"){
+                    // mảng ids[] cần có dữ liệu dạng (id-position)
+                    const position = input.closest("tr").querySelector("input[name = 'position']").value;
+                    // console.log(`${id}-${position}`);
+                    ids.push(`${id}-${position}`)
+                }else{
+                    ids.push(id);
+                }
             });
             idsInput.value = ids.join(", ")
-            // console.log(ids.join(", "));
-
             formChangeMulti.submit();
 
         }else{

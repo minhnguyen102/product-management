@@ -33,6 +33,7 @@ block main
                             th STT
                             th Hình ảnh
                             th Tên sản phẩm
+                            th Số thứ tự
                             th Giá
                             th Trạng thái
                             th Hành động 
@@ -49,6 +50,14 @@ block main
                                 td 
                                     img(src= item.thumbnail, alt=item.title,width="100px", height="auto")
                                 td #{item.title}
+                                td 
+                                    input(
+                                        type="number"
+                                        value=item.position 
+                                        style="width : 60px"
+                                        min="1"
+                                        name="position"
+                                    )
                                 td #{item.price}$ 
                                 td
                                     if(item.status == "active")
