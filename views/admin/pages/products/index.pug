@@ -69,7 +69,11 @@ block main
                                         ) Dừng hoạt động
                                 td
                                     button(class="btn btn-warning btn-sm") Sửa
-                                    button(class="btn btn-danger btn-sm ml-1") Xóa
+                                    button(
+                                        class="btn btn-danger btn-sm ml-1"
+                                        data-id = item.id
+                                        button-delete
+                                    ) Xóa
     
     +pagination(objectPagination)
 
@@ -80,4 +84,11 @@ block main
         data-path = `${prefixAdmin}/products/change-status`
     )
     //- mục đích tạo ra form ẩn: để tạo ra được 1 action -> url mong muốn để bên backend nhận được (status và id) => chọc vào db để thay đổi status của sản phẩm
+
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path = `${prefixAdmin}/products/delete`
+    )
     script(src="/admin/js/products.js")
