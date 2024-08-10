@@ -40,6 +40,7 @@ module.exports.index = async (req, res) => {
 
 
     const products = await Products.find(find)
+                            .sort({position : "desc"})
                             .limit(objectPagination.limitItem)
                             .skip(objectPagination.skip);
 
@@ -83,18 +84,31 @@ module.exports.changeMulti = async (req, res) => {
                 { _id: { $in: ids } },
                 { $set: { status : type } },
             )
-            break
+            break;
+
+        case "delete-all":
+            await Products.updateMany(
+                { _id: { $in: ids } },
+                { $set: { 
+                    deleted : true,
+                    deletedAt : new Date()
+                } },
+            )
+            break;
         default:
             break;
     }
     res.redirect('back');
 }
 
-// // [DELETE] /admim/products/delete
+// [DELETE] /admim/products/delete
 module.exports.deleteItem = async (req, res) => {
-    // console.log(req.body)
     const id = req.params.id;
     
-    await Products.deleteOne({_id : id});
+    await Products.updateOne({_id : id}, {
+        deleted : true,
+        deletedAt : new Date()
+    
+    });
     res.redirect('back');
 }

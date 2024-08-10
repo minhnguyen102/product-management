@@ -86,6 +86,15 @@ if (formChangeMulti){
         e.preventDefault();
         const checkboxMulti = document.querySelector("[checkbox-multi]");
         const inputChecked = checkboxMulti.querySelectorAll("input[name='id']:checked"); 
+        const typeChange = e.target.elements.type.value; // lấy ra option được chọn
+
+        if(typeChange == "delete-all"){
+            const isConfirm = confirm("Bạn muốn xóa sản phẩm này ?");
+            if(!isConfirm){
+                return;
+            }
+        }
+        
         if(inputChecked.length > 0) {
             let ids = [];
             const idsInput = formChangeMulti.querySelector("input[name = 'ids']");
