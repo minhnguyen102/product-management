@@ -1,5 +1,8 @@
 const express = require('express'); 
 const methodOverride = require('method-override')
+const flash = require('express-flash')
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const bodyParser = require('body-parser')
 require('dotenv').config()
 
@@ -19,6 +22,11 @@ app.use(methodOverride('_method'))
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
+
+//flash
+app.use(cookieParser('NKMTTL'));
+app.use(session({ cookie: { maxAge: 60000 }}));
+app.use(flash());
 
 // pug
 app.set('views', './views');
