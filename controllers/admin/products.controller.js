@@ -2,6 +2,7 @@ const Products = require("../../model/products.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
+const systemConfig = "../../config/system.js";
 
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
@@ -25,9 +26,7 @@ module.exports.index = async (req, res) => {
     }
 
     // Pagination 
-    // lấy ra số lượng sản phẩm đang có trong db
     const countProducts =  await Products.countDocuments(find);
-
     let objectPagination = paginationHelper(
         {
         currentPage : 1,
@@ -66,7 +65,6 @@ module.exports.changeStatus = async (req, res) => {
 
     res.redirect('back');
 }
-
 
 // [PATCH] /admim/products/change-multi
 module.exports.changeMulti = async (req, res) => {
@@ -130,4 +128,30 @@ module.exports.deleteItem = async (req, res) => {
     });
     req.flash('success', `Xóa sản phẩm thành công`);
     res.redirect('back');
+}
+
+// [GET] /admim/products/create
+module.exports.create = async (req, res) => {
+    res.render('admin/pages/products/create');
+}
+
+// [POST] /admim/products/create
+module.exports.createPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    
+    
+    if(req.body.position == ""){
+        const countProducts = await Products.countDocuments();
+        req.body.position = countProducts + 1;
+    }else{
+        req.body.position = parseInt(req.body.position);
+    }
+
+    const product = new Products(req.body);
+    product.save();
+    // res.redirect('back'); // option ở lại trang tạo sản phẩm
+    res.redirect(`/admin/products`); // option trở lại trang sản phẩm
+
 }

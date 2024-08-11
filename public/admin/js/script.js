@@ -124,7 +124,7 @@ if (formChangeMulti){
 // Show alert
     const showAlert = document.querySelector("[show-alert]");
     const closeAlert =document.querySelector("[close-alert]");
-    console.log(closeAlert);
+    // console.log(closeAlert);
     if(showAlert){
         const time = parseInt(showAlert.getAttribute("data-time"))
         
