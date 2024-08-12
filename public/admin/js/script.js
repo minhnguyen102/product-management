@@ -138,6 +138,20 @@ if (formChangeMulti){
     }
 // End Show alert
 
+// Upload Image
+const uploadImage = document.querySelector("[upload-image]");
+if(uploadImage){
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePreview = document.querySelector("[upload-image-preview]");
+    uploadImageInput.addEventListener("change", (e) => {
+        const [file] = e.target.files;
+        if(file) {
+            uploadImagePreview.src = URL.createObjectURL(file);
+        }
+    })
+}
+
+// End Upload Image
 
 
 
