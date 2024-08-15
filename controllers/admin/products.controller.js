@@ -2,7 +2,6 @@ const Products = require("../../model/products.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
-const systemConfig = "../../config/system.js";
 
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
@@ -140,7 +139,10 @@ module.exports.createPost = async (req, res) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
-    req.body.thumbnail = `/uploads/${req.file.filename}`;
+
+    if(req.file){
+        req.body.thumbnail = `/uploads/${req.file.filename}`;
+    }
     
     
     if(req.body.position == ""){
@@ -152,7 +154,8 @@ module.exports.createPost = async (req, res) => {
 
     const product = new Products(req.body);
     product.save();
+
     // res.redirect('back'); // option ở lại trang tạo sản phẩm
     res.redirect(`/admin/products`); // option trở lại trang sản phẩm
-
 }
+
