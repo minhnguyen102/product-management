@@ -1,11 +1,15 @@
 extends ../../layouts/default
+include ../../mixins/alert.pug
 
-block main 
+block main
+    +alert-error(5000)
+    +alert-succes(5000)
+    
     h1(class="mb-4") Chỉnh sửa sản phẩm
 
     form(
-        action =`${prefixAdmin}/products/edit/:id`
-        id="form-edit-product"
+        action =`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
+        id="form-eidt-product"
         method="POST"
         enctype="multipart/form-data"
     )
@@ -91,7 +95,7 @@ block main
                 name="position"
                 placeholder="Tự động tăng"
                 min="1"
-                value=product.position
+                value= product.position
             )
         div(class="form-group form-check form-check-inline")
             input(
@@ -118,5 +122,4 @@ block main
                 type="submit"
                 class="btn btn-primary"
             ) Cập nhật
-
     script(src="/admin/js/products.js") 
