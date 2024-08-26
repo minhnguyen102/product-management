@@ -1,4 +1,5 @@
-const express = require('express'); 
+const express = require('express');
+const path = require('path'); 
 const methodOverride = require('method-override')
 const flash = require('express-flash')
 const cookieParser = require('cookie-parser')
@@ -27,6 +28,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser('NKMTTL'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+// TinyMCE
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+// End TinyMCE
 
 // pug
 app.set('views', `${__dirname}/views`);
