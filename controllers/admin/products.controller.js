@@ -5,7 +5,6 @@ const paginationHelper = require("../../helpers/pagination");
 
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
-    // console.log(req.query.page);
     // filterStatus
     const filterStatus = filterStatusHelper(req.query);
     // console.log(filterStatus);
@@ -43,7 +42,6 @@ module.exports.index = async (req, res) => {
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
 
-    // console.log(products);
     res.render('admin/pages/products/index', {
         pageTitle: "Trang chủ",
         products: products,
@@ -164,10 +162,9 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`;
-    }
-
+    // if (req.file) {
+    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
+    // }
 
     if (req.body.position == "") {
         const countProducts = await Products.countDocuments();

@@ -29,4 +29,4 @@ module.exports = (query) => {
     return filterStatus;
 }
 
-// End ilterStatus
+// End filterStatus
