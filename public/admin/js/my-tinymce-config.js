@@ -1,3 +1,3 @@
 tinymce.init({
-    selector: 'textarea.textare-mce'
+    selector: 'textarea.textarea-mce'
 });
