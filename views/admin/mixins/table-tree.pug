@@ -39,7 +39,7 @@ mixin table-tree(records, level = 1)
                     ) Dừng hoạt động
             td
                 a(
-                    href=`${prefixAdmin}/products/edit/${item.id}`
+                    href=`${prefixAdmin}/products-category/edit/${item.id}`
                     class="btn btn-warning btn-sm"
                 ) Sửa
                 button(
@@ -53,4 +53,4 @@ mixin table-tree(records, level = 1)
                 ) Chi tiết
 
         if item.children && item.children.length > 0
-                +table-tree(item.children, level + 1) 
+                +table-tree(item.children, level + 1)

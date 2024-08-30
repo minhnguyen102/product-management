@@ -1,7 +1,9 @@
 extends ../../layouts/default
 include ../../mixins/table-tree.pug
+include ../../mixins/alert.pug
 
 block main
+    +alert-succes(5000)
     h1 Trang danh sách sản phẩm 
 
     .card.mb-3 
@@ -15,7 +17,6 @@ block main
                             class="btn btn-outline-success"
                         ) + Thêm mới 
 
-    
                 table(
                     class="table table-hover table-sm"
                     checkbox-multi
@@ -33,3 +34,12 @@ block main
                             th Hành động 
                     tbody 
                         +table-tree(records)
+
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path = `${prefixAdmin}/products-category/delete`
+    )
+
+    script(src="/admin/js/products-category.js") 
