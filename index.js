@@ -37,8 +37,6 @@ app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce
 app.set('views', `${__dirname}/views`);
 app.set('view engine', 'pug');
 
-
-
 // dùng để pulic các file trong folder public
 app.use(express.static(`${__dirname}/public`)) 
 
