@@ -88,3 +88,15 @@ module.exports.delete = async (req, res) =>{
     req.flash('success', `Xóa sản phẩm thành công`);
     res.redirect("back");
 }
+
+// [GET] /admim/products-category/detail
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+
+    const product = await ProductCategory.findOne({_id : id});
+    // console.log(product);
+    res.render('admin/pages/products-category/detail', {
+        pageTitle: "Trang chi tiết danh mục sản phẩm",
+        product : product
+    });
+}
