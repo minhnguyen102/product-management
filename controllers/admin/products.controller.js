@@ -3,6 +3,9 @@ const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
+const ProductCategory = require("../../model/products-category.model");
+const createTreeHelper = require("../../helpers/createTree")
+
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
     // filterStatus
@@ -158,7 +161,15 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admim/products/create
 module.exports.create = async (req, res) => {
-    res.render('admin/pages/products/create');
+    let find = {
+        deleted: false
+    }
+    const records = await ProductCategory.find(find);
+    const newRecords = createTreeHelper.tree(records);
+    
+    res.render('admin/pages/products/create',{
+        records: newRecords
+    });
 }
 
 // [POST] /admim/products/create
