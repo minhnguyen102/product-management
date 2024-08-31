@@ -166,7 +166,7 @@ module.exports.create = async (req, res) => {
     }
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelper.tree(records);
-    
+
     res.render('admin/pages/products/create',{
         records: newRecords
     });
@@ -204,12 +204,15 @@ module.exports.edit = async (req, res) => {
             deleted: false,
             _id: req.params.id
         }
+        const records = await ProductCategory.find({deleted: false});
+        const newRecords = createTreeHelper.tree(records);
 
         const product = await Products.findOne(find)
 
         // console.log(product)
         res.render('admin/pages/products/edit', {
-            product: product
+            product: product,
+            records: newRecords
         });
     } catch (error) {
         res.redirect(`/admin/products`)
