@@ -36,7 +36,7 @@ block main
                                     td #{item.description}
                                     td 
                                         a(
-                                            href=`${prefixAdmin}/products-category/edit/${item.id}`
+                                            href=`${prefixAdmin}/roles/edit/${item.id}`
                                             class="btn btn-warning btn-sm"
                                         ) Sửa
                                         button(
@@ -45,15 +45,15 @@ block main
                                             button-delete
                                         ) Xóa
                                         a(
-                                            href=`${prefixAdmin}/products-category/detail/${item.id}`
+                                            href=`${prefixAdmin}/roles/detail/${item.id}`
                                             class="btn btn-secondary btn-sm ml-1"
                                         ) Chi tiết
 
-    //- form(
-    //-     action=""
-    //-     method="POST"
-    //-     id="form-delete-item"
-    //-     data-path = `${prefixAdmin}/products-category/delete`
-    //- )
+    form(
+        action=""
+        method="POST"
+        id="form-delete-item"
+        data-path = `${prefixAdmin}/roles/delete`
+    )
 
-    //- script(src="/admin/js/products-category.js") 
+    script(src="/admin/js/roles.js") 

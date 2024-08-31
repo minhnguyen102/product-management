@@ -28,3 +28,67 @@ module.exports.createPost = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/roles`)
 }
 
+// [GET] /admim/roles/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        let find = {
+            deleted: false,
+            _id: req.params.id
+        }
+        const record = await Roles.findOne(find);
+        
+        res.render('admin/pages/roles/edit', {
+            pageTitle : "Trang chỉnh sửa nhóm quyền",
+            record : record
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/roles`)
+    }
+}
+
+// [PATCH] /admim/roles/edit/:id
+module.exports.editPatch = async (req, res) => {
+    try {
+        await Roles.updateOne({
+            deleted:false,
+            _id : req.params.id
+        }, req.body);
+        req.flash('success', `Cập nhật thành công`);
+    } catch (error) {
+        req.flash('error', `Cập nhật thất bại`);
+    }
+    res.redirect('back'); // option ở lại trang tạo sản phẩ
+    
+}
+
+// [GET] /admim/roles/detail/:id
+module.exports.detail = async (req, res) => {
+    try {
+        let find = {
+            deleted: false,
+            _id: req.params.id
+        }
+        const record = await Roles.findOne(find);
+        
+        res.render('admin/pages/roles/detail', {
+            pageTitle : "Trang chi tiết nhóm quyền",
+            record : record
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/roles`)
+    }
+}
+
+// [DELETE] /admim/roles/delete/:id
+module.exports.delete = async (req, res) => {
+    const id = req.params.id
+    await Roles.updateOne({_id : id},
+        {
+            deleted : true,
+            deletedAt: new Date()
+        });
+
+    req.flash('success', `Xóa sản phẩm thành công`);
+    res.redirect("back")
+}
+
