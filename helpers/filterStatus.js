@@ -18,7 +18,7 @@ module.exports = (query) => {
             class : ""
         }
     ]
-    // Tìm ra vị trí button có params hiện tại, xử lí hover
+    // Tìm ra vị trí button có query hiện tại, xử lí hover
     if(query.status){
         const index = filterStatus.findIndex(item => item.status == query.status)
         filterStatus[index].class = "active";

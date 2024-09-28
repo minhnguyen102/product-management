@@ -55,7 +55,7 @@ if(checkboxMulti){
     const inputCheckAll = checkboxMulti.querySelector("input[name = 'checkall']");
     const inputsId = checkboxMulti.querySelectorAll("input[name = 'id']");
 
-    // console.log(inputsId.length);
+    // checkAll -> all check
     inputCheckAll.addEventListener("click", () => {
         const checked = inputCheckAll.checked;
         if (checked){
@@ -64,7 +64,7 @@ if(checkboxMulti){
             inputsId.forEach(input => input.checked = false)
         }
     })
-
+    // all check => check all
     inputsId.forEach(input => {
         input.addEventListener("click", () => {
             const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
@@ -90,7 +90,7 @@ if (formChangeMulti){
         const typeChange = e.target.elements.type.value; // lấy ra option được chọn
 
         if(typeChange == "delete-all"){
-            const isConfirm = confirm("Bạn muốn xóa sản phẩm này ?");
+            const isConfirm = confirm("Bạn muốn xóa những sản phẩm này ?");
             if(!isConfirm){
                 return;
             }

@@ -78,7 +78,7 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admim/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-    // console.log(req.body)
+    // console.log(req.body.type)
     const type = req.body.type;
     const ids = req.body.ids.split(", ");
 
@@ -100,7 +100,7 @@ module.exports.changeMulti = async (req, res) => {
             await Products.updateMany({
                 _id: {
                     $in: ids
-                }
+                }``
             }, {
                 $set: {
                     status: type
