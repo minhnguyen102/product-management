@@ -4,42 +4,46 @@ include ../../mixins/alert.pug
 
 block main
     +alert-succes(5000)
-    h1 Trang danh sách sản phẩm 
+    if(role.permissions.includes("products-category_view"))
+        h1 Trang danh sách sản phẩm 
 
-    .card.mb-3 
-        .card-header Danh sách sản phẩm
-            .card-body
-                .row 
-                    .col-10
-                    .col-2
-                        a(
-                            href=`${prefixAdmin}/products-category/create`
-                            class="btn btn-outline-success"
-                        ) + Thêm mới 
-                
-                table(
-                    class="table table-hover table-sm"
-                    checkbox-multi
-                    ) 
-                
-                    thead 
-                        tr
-                            th
-                                input(type="checkbox" name="checkall")
-                            th STT
-                            th Hình ảnh
-                            th Tiêu đề
-                            th Vị trí
-                            th Trạng thái
-                            th Hành động 
-                    tbody 
-                        +table-tree(records)
+        .card.mb-3 
+            .card-header Danh sách sản phẩm
+                .card-body
+                    .row 
+                        .col-10
+                        .col-2
+                            if(role.permissions.includes("products-category_create"))
+                                a(
+                                    href=`${prefixAdmin}/products-category/create`
+                                    class="btn btn-outline-success"
+                                ) + Thêm mới 
+                    
+                    table(
+                        class="table table-hover table-sm"
+                        checkbox-multi
+                        ) 
+                    
+                        thead 
+                            tr
+                                th
+                                    input(type="checkbox" name="checkall")
+                                th STT
+                                th Hình ảnh
+                                th Tiêu đề
+                                th Vị trí
+                                th Trạng thái
+                                th Hành động 
+                        tbody 
+                            +table-tree(records)
 
-    form(
-        action=""
-        method="POST"
-        id="form-delete-item"
-        data-path = `${prefixAdmin}/products-category/delete`
-    )
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path = `${prefixAdmin}/products-category/delete`
+        )
 
-    script(src="/admin/js/products-category.js") 
+        script(src="/admin/js/products-category.js") 
+    else 
+        div Bạn không có quyền truy cập

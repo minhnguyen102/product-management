@@ -4,7 +4,7 @@ const systemConfig = require("../../config/system");
 
 // [GET] /admim/auth/login
 module.exports.login = (req, res) => {
-    console.log(req.cookies.token);
+    // console.log(req.cookies.token);
     if(req.cookies.token){
         res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
     }else{

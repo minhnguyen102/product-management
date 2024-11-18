@@ -4,56 +4,59 @@ include ../../mixins/alert.pug
 
 block main
     +alert-succes(5000)
-    h1 Trang danh sách nhóm quyền 
+    if(role.permissions.includes("roles_view"))
+        h1 Trang danh sách nhóm quyền 
 
-    .card.mb-3 
-        .card-header Danh sách nhóm quyền
-            .card-body
-                .row 
-                    .col-10
-                    .col-2
-                        a(
-                            href=`${prefixAdmin}/roles/create`
-                            class="btn btn-outline-success"
-                        ) + Thêm mới 
-                
-                table(
-                    class="table table-hover table-sm"
-                    ) 
-                
-                    thead 
-                        tr
-                            th STT
-                            th Nhóm quyền 
-                            th Mô tả
-                            th Hành động 
-                    tbody
-                        if(records.length > 0)
-                            each item, index in records     
-                                tr
-                                    td #{index + 1}
-                                    td #{item.title}
-                                    td #{item.description}
-                                    td 
-                                        a(
-                                            href=`${prefixAdmin}/roles/edit/${item.id}`
-                                            class="btn btn-warning btn-sm"
-                                        ) Sửa
-                                        button(
-                                            class="btn btn-danger btn-sm ml-1"
-                                            data-id = item.id
-                                            button-delete
-                                        ) Xóa
-                                        a(
-                                            href=`${prefixAdmin}/roles/detail/${item.id}`
-                                            class="btn btn-secondary btn-sm ml-1"
-                                        ) Chi tiết
+        .card.mb-3 
+            .card-header Danh sách nhóm quyền
+                .card-body
+                    .row 
+                        .col-10
+                        .col-2
+                            a(
+                                href=`${prefixAdmin}/roles/create`
+                                class="btn btn-outline-success"
+                            ) + Thêm mới 
+                    
+                    table(
+                        class="table table-hover table-sm"
+                        ) 
+                    
+                        thead 
+                            tr
+                                th STT
+                                th Nhóm quyền 
+                                th Mô tả
+                                th Hành động 
+                        tbody
+                            if(records.length > 0)
+                                each item, index in records     
+                                    tr
+                                        td #{index + 1}
+                                        td #{item.title}
+                                        td #{item.description}
+                                        td 
+                                            a(
+                                                href=`${prefixAdmin}/roles/edit/${item.id}`
+                                                class="btn btn-warning btn-sm"
+                                            ) Sửa
+                                            button(
+                                                class="btn btn-danger btn-sm ml-1"
+                                                data-id = item.id
+                                                button-delete
+                                            ) Xóa
+                                            a(
+                                                href=`${prefixAdmin}/roles/detail/${item.id}`
+                                                class="btn btn-secondary btn-sm ml-1"
+                                            ) Chi tiết
 
-    form(
-        action=""
-        method="POST"
-        id="form-delete-item"
-        data-path = `${prefixAdmin}/roles/delete`
-    )
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path = `${prefixAdmin}/roles/delete`
+        )
 
-    script(src="/admin/js/roles.js") 
+        script(src="/admin/js/roles.js") 
+    else 
+        div Bạn không có quyền truy cập
