@@ -129,7 +129,10 @@ module.exports.changeMulti = async (req, res) => {
             }, {
                 $set: {
                     deleted: true,
-                    deletedAt: new Date()
+                    deleteBy:{
+                        account_id : res.locals.user.id,
+                        deleteAt : new Date()
+                    }
                 }
             }, )
             req.flash('success', `Xóa thành công ${ids.length} sản phẩm `);
@@ -164,8 +167,10 @@ module.exports.deleteItem = async (req, res) => {
         _id: id
     }, {
         deleted: true,
-        deletedAt: new Date()
-
+        deleteBy:{
+            account_id : res.locals.user.id,
+            deleteAt : new Date()
+        }
     });
     req.flash('success', `Xóa sản phẩm thành công`);
     res.redirect('back');
