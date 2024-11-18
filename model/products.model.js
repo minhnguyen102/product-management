@@ -13,6 +13,13 @@ const productSchema = new mongoose.Schema({
         slug: "title",
         unique: true // tránh trùng slug
     },
+    createBy : {
+        account_id : String,
+        createAt : {
+            type : Date,
+            default : Date.now
+        }
+    },
     description: String,
     price: Number,
     discountPercentage: Number,
@@ -24,7 +31,10 @@ const productSchema = new mongoose.Schema({
         type : Boolean,
         default : false
     },
-    deletedAt : Date
+    // deletedAt : Date
+    deleteBy : {
+        account_id : String,
+    }
 },{ timestamps: true });
 
 const Product = mongoose.model('Product', productSchema, "products");

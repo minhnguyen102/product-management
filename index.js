@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path'); 
 const methodOverride = require('method-override')
 const flash = require('express-flash')
+const moment = require('moment')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const bodyParser = require('body-parser')
@@ -47,6 +48,7 @@ routeAdmin(app)
 // App locals variables
 const systemConfig = require("./config/system")
 app.locals.prefixAdmin = systemConfig.prefixAdmin;
+app.locals.moment = moment;
 
 app.listen(port, () => {  
     console.log(`Example app listening on port ${port}`);

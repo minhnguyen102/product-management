@@ -1,4 +1,5 @@
 const Products = require("../../model/products.model");
+const Accounts = require("../../model/accounts.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
@@ -49,6 +50,17 @@ module.exports.index = async (req, res) => {
         .sort(sort)
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip);
+
+    for (const product of products){
+        const user = await Accounts.findOne({
+            _id : product.createBy.account_id
+        });
+
+        // console.log(user);
+        if(user){
+            product.accountFullName = user.fullname;
+        }
+    }
 
     res.render('admin/pages/products/index', {
         pageTitle: "Trang chủ",
@@ -182,6 +194,7 @@ module.exports.createPost = async (req, res) => {
     //     req.body.thumbnail = `/uploads/${req.file.filename}`;
     // }
 
+    console.log(res.locals.user);
 
     if (req.body.position == "") {
         const countProducts = await Products.countDocuments();
@@ -190,6 +203,10 @@ module.exports.createPost = async (req, res) => {
         req.body.position = parseInt(req.body.position);
     }
 
+    req.body.createBy = {
+        account_id : res.locals.user.id
+    }
+    
     const product = new Products(req.body);
     product.save();
 
