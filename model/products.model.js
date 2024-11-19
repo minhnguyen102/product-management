@@ -35,7 +35,13 @@ const productSchema = new mongoose.Schema({
     deleteBy : {
         account_id : String,
         deleteAt : Date
-    }
+    },
+    updateBy : [
+        {
+            account_id : String,
+            updateAt : Date
+        }
+    ]
 },{ timestamps: true });
 
 const Product = mongoose.model('Product', productSchema, "products");

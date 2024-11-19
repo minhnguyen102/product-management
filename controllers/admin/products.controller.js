@@ -5,7 +5,8 @@ const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 
 const ProductCategory = require("../../model/products-category.model");
-const createTreeHelper = require("../../helpers/createTree")
+const createTreeHelper = require("../../helpers/createTree");
+const Account = require("../../model/accounts.model");
 
 // [GET] /admim/products
 module.exports.index = async (req, res) => {
@@ -52,13 +53,25 @@ module.exports.index = async (req, res) => {
         .skip(objectPagination.skip);
 
     for (const product of products){
+        // lấy ra người tạo sản phẩm
         const user = await Accounts.findOne({
             _id : product.createBy.account_id
         });
-
-        // console.log(user);
         if(user){
             product.accountFullName = user.fullname;
+        }
+
+        // lấy ra người chỉnh sửa sản phẩm gần nhất
+        if(product.updateBy.length > 0){
+            // console.log(product.updateBy[product.updateBy.length - 1].account_id)
+            const userUpdate = await Account.findOne({
+                _id : product.updateBy[product.updateBy.length - 1].account_id
+            })
+
+            console.log(userUpdate);
+            if(userUpdate){
+                product.updateBy.userUpdate = userUpdate.fullname;
+            }
         }
     }
 
@@ -253,10 +266,19 @@ module.exports.editPatch = async (req, res) => {
     }
 
     try {
+        const updateBy = {
+            account_id : res.locals.user.id,
+            updateAt : new Date()
+        }
         await Products.updateOne({
             deleted:false,
             _id : req.params.id
-        }, req.body);
+        }, {
+            ...req.body,
+            $push : { // đây là lệnh push vào trong mảng updateBy của model
+                updateBy : updateBy
+            }
+        });
         req.flash('success', `Cập nhật sản phẩm thành công`);
     } catch (error) {
         req.flash('error', `Cập nhật sản phẩm thất bại`);

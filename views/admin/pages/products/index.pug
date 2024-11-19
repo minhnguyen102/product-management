@@ -58,6 +58,7 @@ block main
                                 th Giá
                                 th Trạng thái
                                 th Người tạo
+                                th Người cập nhật
                                 th Hành động 
                         tbody 
                             each item, index in products
@@ -111,6 +112,12 @@ block main
                                     td 
                                         p #{item.accountFullName}
                                         +moment(item.createBy.createAt)
+                                    td 
+                                        - const updateBy = item.updateBy[item.updateBy.length - 1]
+                                        if(updateBy)
+                                            p #{item.updateBy.userUpdate}
+                                            p
+                                                +moment(updateBy.updateAt)
                                     td
                                         if(role.permissions.includes("products_edit"))
                                             a(
