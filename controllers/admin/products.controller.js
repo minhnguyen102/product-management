@@ -68,7 +68,6 @@ module.exports.index = async (req, res) => {
                 _id : product.updateBy[product.updateBy.length - 1].account_id
             })
 
-            console.log(userUpdate);
             if(userUpdate){
                 product.updateBy.userUpdate = userUpdate.fullname;
             }
@@ -89,11 +88,17 @@ module.exports.changeStatus = async (req, res) => {
     // console.log(req.params);
     const status = req.params.status;
     const id = req.params.id;
-
+    const updateBy = {
+        account_id : res.locals.user.id,
+        updateAt : new Date()
+    }
     await Products.updateOne({
         _id: id
     }, {
-        status: status
+        status: status,
+        $push : { // đây là lệnh push vào trong mảng updateBy của model
+            updateBy : updateBy
+        }
     });
 
     req.flash('success', 'Cập nhật trạng thái sản phẩm thành công');
@@ -103,9 +108,16 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admim/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-    // console.log(req.body.type)
+    
     const type = req.body.type;
     const ids = req.body.ids.split(", ");
+
+    const updateBy = {
+        account_id : res.locals.user.id,
+        updateAt : new Date()
+    }
+    console.log(req.body.type)
+    console.log(ids)
 
     // chưa hợp lí
     switch (type) {
@@ -115,9 +127,8 @@ module.exports.changeMulti = async (req, res) => {
                     $in: ids
                 }
             }, {
-                $set: {
-                    status: type
-                }
+                status: type,
+                $push : { updateBy : updateBy }
             }, )
             req.flash('success', `Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
             break;
@@ -125,10 +136,11 @@ module.exports.changeMulti = async (req, res) => {
             await Products.updateMany({
                 _id: {
                     $in: ids
-                }``
+                }
             }, {
-                $set: {
-                    status: type
+                status: type,
+                $push : { // đây là lệnh push vào trong mảng updateBy của model
+                    updateBy : updateBy
                 }
             }, )
             req.flash('success', `Cập nhật trạng thái ${ids.length} sản phẩm thành công`);
@@ -161,7 +173,10 @@ module.exports.changeMulti = async (req, res) => {
                 await Products.updateOne({
                     _id: id
                 }, {
-                    position: position
+                    position: position,
+                    $push : { // đây là lệnh push vào trong mảng updateBy của model
+                        updateBy : updateBy
+                    }
                 });
             }
             req.flash('success', `Thay đổi thành công thứ tự ${ids.length} sản phẩm `);

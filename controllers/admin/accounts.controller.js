@@ -61,6 +61,7 @@ module.exports.edit = async (req, res) => {
         }
         const record = await Account.findOne(find);
         const roles = await Roles.find({deleted : false});
+        // console.log(roles)
         res.render('admin/pages/accounts/edit', {
             pageTitle : "Trang chỉnh sửa tài khoản",
             record : record,
