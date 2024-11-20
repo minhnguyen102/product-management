@@ -95,3 +95,20 @@ module.exports.editPatch = async (req, res) => {
     res.redirect("back")
     
 }
+
+// [GET] /admim/accounts/detail/:id
+
+module.exports.detail = async (req, res) =>{
+    let find = {
+        _id : req.params.id,
+        deleted : false
+    }
+    const account = await Account.findOne(find);
+    const roles = await Roles.find({deleted : false});
+    console.log(roles);
+    console.log(account);
+    res.render('admin/pages/accounts/detail', {
+        account : account,
+        roles : roles
+    });
+}

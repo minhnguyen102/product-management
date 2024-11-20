@@ -8,7 +8,7 @@ module.exports.login = (req, res) => {
     if(req.cookies.token){
         res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
     }else{
-        res.render('admin/pages/auth/login', {
+        res.render('admin/pages/auth/logintest', {
             pageTitle : "Trang đăng nhập"
         });
     }

@@ -1,0 +1,18 @@
+.page-title{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.body {
+    display: flex;
+    /* justify-content: space-between; */
+    /* width: 70%; */
+}
+.body .inner-image{
+    width: 40%;
+}
+.body .inner-image img{
+    width: 80%;
+    height: auto;
+    border: 2px solid #000;
+}

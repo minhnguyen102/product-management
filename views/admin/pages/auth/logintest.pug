@@ -1,0 +1,40 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+
+block main
+    link(rel='stylesheet', type='text/css', href='/admin/css/auth/login.css')
+    +alert-succes(5000)
+    +alert-error(5000)
+
+    .background
+        .shape
+        .shape
+    form(
+    action=`${prefixAdmin}/auth/login`
+    method="POST"
+
+    )
+        h3 Đăng nhập
+        lable(for="email") Email 
+        input(
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            autocomplete="off"
+            required
+        )
+
+        
+        lable(for="password") Password
+        input(
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+        )
+        button(
+            type="submit"
+            class="btn btn-primary btn-block"
+        ) Đăng nhập

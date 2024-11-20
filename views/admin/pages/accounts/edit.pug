@@ -74,7 +74,7 @@ block main
                 each item in roles
                     option(
                         value=item.id
-                        selected=(item.id = record.role_id ? true : false)
+                        selected=(item.id == record.role_id ? true : false)
                     ) #{item.title}
 
         div(class="form-group form-check form-check-inline")

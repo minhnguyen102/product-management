@@ -13,6 +13,13 @@ const productCategorySchema = new mongoose.Schema({
         slug: "title",
         unique: true // tránh trùng slug
     },
+    // createBy :{
+    //     account_id : String,
+    //     createAt : {
+    //         type : Date,
+    //         default : Date.now
+    //     }
+    // },
     description: String,
     stock: Number,
     thumbnail: String,

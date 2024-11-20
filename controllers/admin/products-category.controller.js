@@ -1,4 +1,5 @@
 const ProductCategory = require("../../model/products-category.model");
+const Account = require("../../model/accounts.model");
 const createTreeHelper = require("../../helpers/createTree")
 
 // [GET] /admim/products-category
@@ -8,6 +9,7 @@ module.exports.index = async (req, res) => {
     }
     const records = await ProductCategory.find(find);
     const newRecords = createTreeHelper.tree(records);
+    // console.log(newRecords);
     res.render('admin/pages/products-category/index', {
         pageTitle: "Trang danh mục sản phẩm",
         records: newRecords
@@ -38,6 +40,12 @@ module.exports.createPost = async (req, res) => {
     }
 
     const record = new ProductCategory(req.body);
+    
+    // record.createBy = {
+    //     account_id : res.locals.user.id
+    // }
+    
+    // console.log(record);
     record.save();
 
     res.redirect(`/admin/products-category`);

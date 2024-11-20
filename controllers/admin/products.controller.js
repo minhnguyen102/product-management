@@ -3,7 +3,7 @@ const Accounts = require("../../model/accounts.model");
 const filterStatusHelper = require("../../helpers/filterStatus");
 const SearchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
-
+const systemConfig = require("../../config/system");
 const ProductCategory = require("../../model/products-category.model");
 const createTreeHelper = require("../../helpers/createTree");
 const Account = require("../../model/accounts.model");
@@ -227,7 +227,7 @@ module.exports.createPost = async (req, res) => {
     //     req.body.thumbnail = `/uploads/${req.file.filename}`;
     // }
 
-    console.log(res.locals.user);
+    // console.log(res.locals.user);
 
     if (req.body.position == "") {
         const countProducts = await Products.countDocuments();
@@ -298,11 +298,14 @@ module.exports.editPatch = async (req, res) => {
     } catch (error) {
         req.flash('error', `Cập nhật sản phẩm thất bại`);
     }
-    res.redirect('back'); // option ở lại trang tạo sản phẩ
+    // res.redirect('back'); // option ở lại trang tạo sản phẩm
+    res.redirect(`${systemConfig.prefixAdmin}/products/detail/${req.params.id}`)
 }
 
 // [GET] /admim/products/detail
 module.exports.detail = async (req, res) => {
+
+
     try {
         let find = {
             deleted: false,
@@ -310,10 +313,17 @@ module.exports.detail = async (req, res) => {
         }
 
         const product = await Products.findOne(find)
-        // console.log(product)
+        console.log(product)
+
+        const productCategory = await ProductCategory.findOne({
+            _id : product.product_category_id
+        })
+
+        // console.log(productCategory);
         res.render('admin/pages/products/detail', {
             pageTitle : product.title,
-            product: product
+            product: product,
+            productCategory : productCategory
         });
     } catch (error) {
         res.redirect(`/admin/products`)

@@ -1,0 +1,23 @@
+.page-title{
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.body {
+    display: flex;
+
+}
+.body .inner-image{
+    margin-right: 40px;
+}
+.body .inner-image img{
+    width: 250px;
+    height: auto;
+    border: 2px solid #000;
+}
+
+.body .inner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

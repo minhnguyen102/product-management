@@ -1,3 +1,6 @@
+*{
+    box-sizing: border-box;
+}
 /* Header */
 .header {
     background: #202020;
@@ -34,7 +37,7 @@
 /* End Body */
 
 /* Sider */
-.sider .inner-menu ul {
+/* .sider .inner-menu ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -45,7 +48,39 @@
     display: block;
     padding: 6px 10px;
     border-bottom: 1px solid #515151;
+} */
+
+.sider {
+    background-color: #00bd9d;
+    color: #fffafa;
 }
+
+.sider .inner-menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sider .inner-menu ul li {
+    padding: 10px 15px;
+}
+
+.sider .inner-menu ul li a {
+    color: #fffafa;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sider .inner-menu ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fffafa;
+}
+
+.sider .inner-menu ul li a:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
 /* End sider */
 
 /* Alert-hidden */
