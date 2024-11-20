@@ -72,7 +72,7 @@ module.exports.edit = async (req, res) => {
     }
 }
 
-// [GET] /admim/accounts/editPatch/:id
+// [PATHCH] /admim/accounts/editPatch/:id
 module.exports.editPatch = async (req, res) => {
     const id = req.params.id;
     let find = {
