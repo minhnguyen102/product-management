@@ -1,0 +1,6 @@
+include products-item
+mixin products-layout(products)
+    .row
+        each item in products
+            +products-item(item)
+        
