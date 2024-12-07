@@ -298,8 +298,8 @@ module.exports.editPatch = async (req, res) => {
     } catch (error) {
         req.flash('error', `Cập nhật sản phẩm thất bại`);
     }
-    // res.redirect('back'); // option ở lại trang tạo sản phẩm
-    res.redirect(`${systemConfig.prefixAdmin}/products/detail/${req.params.id}`)
+    res.redirect('back'); // option ở lại trang tạo sản phẩm
+    // res.redirect(`${systemConfig.prefixAdmin}/products/detail/${req.params.id}`)
 }
 
 // [GET] /admim/products/detail
