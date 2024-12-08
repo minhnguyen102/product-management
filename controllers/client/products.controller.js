@@ -18,18 +18,21 @@ module.exports.index = async (req, res) => {
     });
 }
 
-// [GET] /products/:slug
+// [GET] /products/deatil/:slugProduct
 module.exports.detail = async (req, res) => {
     // console.log(req.params)
 
     try {
         const find = {
             status: "active",
-            slug : req.params.slug,
+            slug : req.params.slugProduct,
             deleted : false
         }
         const product = await Product.findOne(find)
-        console.log(product)
+
+        product.priceNew = productsHellper.priceNew(product)   
+
+        // console.log(product)
         res.render('client/pages/products/detail', {
             pageTitle : product.title,
             product : product

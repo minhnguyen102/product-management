@@ -9,7 +9,7 @@ mixin products-item(item)
                 if(item.featured == "1")
                     .inner-featured Nổi bật
             .inner-content
-                a(href=`/products/${item.slug}`)   
+                a(href=`/products/detail/${item.slug}`)   
                     h3.inner-title #{item.title}
                 .inner-price-new #{item.newPrice}$
                 .inner-price-old #{item.price}$
