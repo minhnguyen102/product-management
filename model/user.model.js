@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     fullname: String,
     email: String,
     password: String,
-    tokenuser: {
+    tokenUser: {
         type:String,
         default: generate.generateRandomString(20)
     },
