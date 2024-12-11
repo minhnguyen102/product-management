@@ -1,7 +1,6 @@
 const md5 = require("md5")
 const User = require("../../model/user.model")
 
-
 // [GET] /user/register
 module.exports.register = async (req, res) => {
     res.render('client/pages/user/register', {
@@ -24,7 +23,7 @@ module.exports.registerPost = async (req, res) => {
     req.body.password = md5(req.body.password);
     const user = new User(req.body);
     await user.save();
-    console.log(user);
+    // console.log(user);
 
     res.cookie("tokerUser", user.tokenUser)
 
@@ -67,4 +66,9 @@ module.exports.loginPost = async (req, res) => {
     res.cookie("tokenUser", user.tokenUser)
 
     res.redirect("/")
+}
+// [GET] /user/logout
+module.exports.logout = async (req, res) => {
+    res.clearCookie("tokenUser");
+    res.redirect("/user/login")
 }
