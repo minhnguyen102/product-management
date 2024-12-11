@@ -1,9 +1,10 @@
 extends ../../layouts/default.pug
-include ../../mixins/box-head.pug
 include ../../mixins/alert.pug
-include ../../mixins/products-layout.pug
+
+
 
 block main
+    //- link(rel='stylesheet', type='text/css', href='/css/login.css')
     +alert-succes(5000)
     +alert-error(5000)
 
