@@ -9,11 +9,6 @@ module.exports.index = async (req, res) => {
     }
     const records = await Account.find(find).select("-password -token");
 
-    for (const record of records) {
-        const role = await Roles.findOne({_id : record.role_id, deleted :false});
-        // console.log(role);
-        record.role = role.title;
-    }
 
     // console.log(records);
     res.render('admin/pages/accounts/index', {

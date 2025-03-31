@@ -32,12 +32,6 @@ module.exports.create = async (req, res) => {
 
 // [POST] /admim/products-category/create
 module.exports.createPost = async (req, res) => {
-    if (req.body.position == "") {
-        const countProducts = await ProductCategory.countDocuments();
-        req.body.position = countProducts + 1;
-    } else {
-        req.body.position = parseInt(req.body.position);
-    }
 
     const record = new ProductCategory(req.body);
     
@@ -74,7 +68,6 @@ module.exports.edit = async (req, res) => {
 // [PATCH] /admim/products-category/edit/:id
 module.exports.editPatch = async (req, res) => {
     id = req.params.id;
-    req.body.position = parseInt(req.body.position);
     
     await ProductCategory.updateOne({_id: id}, req.body);
     req.flash('success', `Cập nhật sản phẩm thành công`);

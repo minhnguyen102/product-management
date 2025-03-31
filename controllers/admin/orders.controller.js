@@ -38,6 +38,7 @@ module.exports.detail = async (req, res) => {
         item.productInfo = productInfo;
     }
     order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);
+    // console.log(order)
 
     res.render('admin/pages/orders/detail', {
         pageTitle : "Chi tiết đơn hàng",

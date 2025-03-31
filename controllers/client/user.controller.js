@@ -1,5 +1,6 @@
 const md5 = require("md5")
 const User = require("../../model/user.model")
+const Cart = require("../../model/cart.model")
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -64,6 +65,11 @@ module.exports.loginPost = async (req, res) => {
     }
 
     res.cookie("tokenUser", user.tokenUser)
+    const cartId = res.locals.miniCart.id;
+    await Cart.updateOne(
+        {_id : cartId},
+        {user_id : user.id}
+    )
 
     res.redirect("/")
 }

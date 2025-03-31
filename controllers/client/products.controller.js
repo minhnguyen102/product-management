@@ -38,7 +38,7 @@ module.exports.detail = async (req, res) => {
             product : product
         });
     } catch (error) {
-        res.ridirect(`/products`)
+        res.redirect(`/products`)
     }
 }
 
@@ -56,8 +56,6 @@ module.exports.category = async (req, res) =>{
     const listCategory = await productsCategoryHellper.getSubCategory(productCategory.id);
 
     const listCategoryId = listCategory.map(item => item.id);
-    console.log(productCategory.id);
-    console.log(listCategoryId);
 
 
     const products = await Product.find({

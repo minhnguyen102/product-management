@@ -44,7 +44,7 @@ module.exports.index = async (req, res) => {
     if(req.query.sortKey && req.query.sortValue){
         sort[req.query.sortKey] = req.query.sortValue;
     }else{
-        sort.position = "desc"
+        sort.price = "desc"
     }
     // Sort
     const products = await Products.find(find)
@@ -162,25 +162,6 @@ module.exports.changeMulti = async (req, res) => {
             }, )
             req.flash('success', `Xóa thành công ${ids.length} sản phẩm `);
             break;
-        case "change-position":
-            // console.log(ids);
-            for (const item of ids) {
-                let [id, position] = item.split("-");
-                position = parseInt(position);
-                // console.log(id);
-                // console.log(position);
-
-                await Products.updateOne({
-                    _id: id
-                }, {
-                    position: position,
-                    $push : { // đây là lệnh push vào trong mảng updateBy của model
-                        updateBy : updateBy
-                    }
-                });
-            }
-            req.flash('success', `Thay đổi thành công thứ tự ${ids.length} sản phẩm `);
-            break;
         default:
             break;
     }
@@ -223,18 +204,6 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
 
-    // if (req.file) {
-    //     req.body.thumbnail = `/uploads/${req.file.filename}`;
-    // }
-
-    // console.log(res.locals.user);
-
-    if (req.body.position == "") {
-        const countProducts = await Products.countDocuments();
-        req.body.position = countProducts + 1;
-    } else {
-        req.body.position = parseInt(req.body.position);
-    }
 
     req.body.createBy = {
         account_id : res.locals.user.id
@@ -243,7 +212,6 @@ module.exports.createPost = async (req, res) => {
     const product = new Products(req.body);
     product.save();
 
-    // res.redirect('back'); // option ở lại trang tạo sản phẩm
     res.redirect(`/admin/products`); // option trở lại trang sản phẩm
 }
 
@@ -274,7 +242,6 @@ module.exports.editPatch = async (req, res) => {
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
-    req.body.position = parseInt(req.body.position);
 
     if (req.file) {
         req.body.thumbnail = `/uploads/${req.file.filename}`;

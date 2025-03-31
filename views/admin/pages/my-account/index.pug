@@ -22,8 +22,6 @@ block main
                 span 
                     <b> #{user.status == "active" ? "Hoạt động" : "Dừng hoạt động"} </b>
 
-            if(role.title)
-                p Phân quyền: <b>#{role.title}</b>
 
             a(
                 href=`${prefixAdmin}/my-account/edit`

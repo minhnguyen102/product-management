@@ -48,20 +48,6 @@ block main
                 class="image-preview"
             )
             button(id="button-close-image") X
-    
-    div(class="form-group")
-        label(for="role_id") Phân quyền
-        select(
-            name="role_id"
-            id="role_id"
-            class="form-control"
-        )
-            option(disabled) -- Chọn --
-            each item in roles
-                option(
-                    value=item.id
-                    selected=(value == account.role_id ? true : false)
-                ) #{item.title}
 
     div(class="form-group form-check form-check-inline")
         input(
@@ -83,9 +69,8 @@ block main
             checked=(account.status == "inactive" ? true : false)
         )
         label(for="statusInactive" class="form-check-lable") Dừng hoạt động 
-    if(role.permissions.includes("accounts_edit"))
-        div
-            a(
-                href=`${prefixAdmin}/accounts/edit/${account.id}`
-                class="btn btn-warning"
-            ) Chỉnh sửa
+    div
+        a(
+            href=`${prefixAdmin}/accounts/edit/${account.id}`
+            class="btn btn-warning"
+        ) Chỉnh sửa

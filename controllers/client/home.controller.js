@@ -1,4 +1,5 @@
 const Product = require('../../model/products.model');
+const Cart = require('../../model/cart.model');
 const productsHellper = require("../../helpers/products")
 // [GET] /
 module.exports.index = async (req, res) => {
@@ -19,9 +20,18 @@ module.exports.index = async (req, res) => {
     const newProductsNew = productsHellper.priceNewProduct(productsNew);
 
 
+    // const cartId = req.cookies.cartId;
+    // console.log(cartId)
+    // const cart = await Cart.findOne({
+    //     _id : cartId
+    // })
+    // cart.totalQuantity = cart.products.reduce((sum, item) => sum + item.quantity, 0) // thêm biến totalQuantity vào object cart
+    // console.log(cart.totalQuantity)
+
     res.render('client/pages/home/index', {
         pageTitle : "Trang chủ",
         productsFeatured : newProductsFeatured,
-        productsNew : newProductsNew
+        productsNew : newProductsNew,
+        // cart : cart.totalQuantity
     });
 }
