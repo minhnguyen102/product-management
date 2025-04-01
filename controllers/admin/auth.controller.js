@@ -6,7 +6,7 @@ const systemConfig = require("../../config/system");
 module.exports.login = (req, res) => {
     // console.log(req.cookies.token);
     if(req.cookies.token){
-        res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+        res.redirect(`${systemConfig.prefixAdmin}/products-category`)
     }else{
         res.render('admin/pages/auth/logintest', {
             pageTitle : "Trang đăng nhập"
@@ -45,7 +45,7 @@ module.exports.loginPost = async (req, res) => {
     }
 
     res.cookie("token", user.token);
-    res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    res.redirect(`${systemConfig.prefixAdmin}/products-category`);
 }
 
 // [GET] /admim/auth/logout

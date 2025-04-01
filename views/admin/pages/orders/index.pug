@@ -1,6 +1,7 @@
 extends ../../layouts/default
 include ../../mixins/table-tree.pug
 include ../../mixins/alert.pug
+include ../../mixins/formHidden.pug
 
 block main
     +alert-succes(4000) 
@@ -10,6 +11,14 @@ block main
     .row 
         .col-12 
             h1 #{pageTitle}
+
+    .row 
+        .col-12 
+            a(
+                href=`${prefixAdmin}/orders/accept`
+                class="btn btn-primary"
+            ) Đơn hàng đã xác nhận (#{countOrderAc})
+    br
 
     .row 
         .col-12 
@@ -28,7 +37,7 @@ block main
                         each item, index in orders
                             tr 
                                 td #{index + 1}
-                                td IT333-#{index + 1}
+                                td #{item.orderCode}
                                 td #{item.userInfo.fullName}
                                 td #{item.userInfo.address}
                                 td #{item.totalPrice}$
@@ -36,11 +45,11 @@ block main
                                     a(href=`${prefixAdmin}/orders/detail/${item.id}`) Chi tiết
                                 td 
                                     a(
-                                        href=`/order/delete/`
                                         class="btn btn-success"    
+                                        button-access
+                                        id-item=item.id
                                     ) Duyệt
                 
-                //- h3(class="text-right") Tổng đơn hàng : #{cartDetail.totalPrice}$
 
-    
-    script(src="/js/cart.js") 
+    +formHiddenAccept("form-accept", `${prefixAdmin}/orders/accept`)
+    script(src="/admin/js/order.js") 

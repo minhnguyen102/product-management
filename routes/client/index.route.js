@@ -12,6 +12,7 @@ const cartMiddlewate = require("../../middlewares/clients/cart.middleware")
 module.exports = (app) => {
     app.use(productsCategoryMiddlewate.productsCategory)
     app.use(userMiddleWare.infoUser)
+    // app.use(cartMiddlewate.ca)
 
     app.use('/', homeRoutes);
     app.use('/products', productRoutes);

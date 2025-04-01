@@ -1,8 +1,16 @@
 const mongoose = require("mongoose");
-
+const generate = require("../helpers/generate");
 const orderSchema = new mongoose.Schema({
-    // user_id : String,
+    user_id : String,
     cart_id :String,
+    accept : {
+        type : Boolean,
+        default : false
+    },
+    orderCode : {
+        type : String,
+        default : "CNW" + generate.generateRandomString(10)
+    },
     userInfo : {
         fullName : String,
         phone : String,
