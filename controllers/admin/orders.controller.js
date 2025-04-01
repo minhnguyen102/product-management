@@ -28,7 +28,6 @@ module.exports.index = async (req, res) => {
 
 // [GET] /admin/detail/:orderId
 module.exports.detail = async (req, res) => {
-    console.log(req.params.orderId);
     const order = await Order.findOne({
         _id : req.params.orderId
     })
@@ -37,16 +36,16 @@ module.exports.detail = async (req, res) => {
         item.priceNew = productHelper.priceNew(item);
         item.totalPrice = item.priceNew * item.quantity;
         const productId = item.product_id;
+        // console.log(productId);
         const productInfo = await Product.findOne({
             _id : productId,
-            deleted : false,
-            status : "active"
+            // deleted : false,
+            // status : "active"
         })
         item.productInfo = productInfo;
     }
     order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0);
     // console.log(order)
-
     res.render('admin/pages/orders/detail', {
         pageTitle : "Chi tiết đơn hàng",
         order : order

@@ -23,6 +23,7 @@ block main
                         th Địa chỉ
                         th Tổng tiền
                         th Chi tiết
+                        th Trạng thái
 
                 tbody
                     each item, index in ordersAccept
@@ -34,5 +35,9 @@ block main
                             td #{item.totalPrice}$
                             td 
                                 a(href=`${prefixAdmin}/orders/detail/${item.id}`) Chi tiết
+                            td 
+                                span(
+                                    class="btn btn-success"    
+                                ) Đã duyệt
                         
     script(src="/admin/js/order.js") 
